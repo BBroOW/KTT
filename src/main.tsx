@@ -5,6 +5,7 @@ import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./layout/index.tsx";
 import Utleie from "./Utleie.tsx";
+import UtleieVerification from "./UtleieVerification.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -13,6 +14,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route element={<Layout />}>
           <Route path="/" element={<LandingPage />} />
           <Route path="/Utleie" element={<Utleie />} />
+          <Route path="/Utleie/Godkjennelse" element={<UtleieVerification />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -11,15 +11,15 @@ const Footer = () => {
           <h1>Åpningstider: Mandag–fredag kl. 08.00–15.30</h1>
           <h1 className="mr-[100px]">E-post: Send e-post</h1>
         </div>
-        <div className="flex flex-row w-full justify-between mt-20">
+        <div className="flex relative flex-row w-full justify-between mt-20">
           <a href="https://www.facebook.com/HamarKTT">
-            <img src={facebook} className="h-[50px] w-[50px] ml-[550px]" />
+            <img src={facebook} className="h-[50px] w-[50px] ml-[300px]" />
           </a>
           <a href="https://www.youtube.com/channel/UCkQQ1XxUdAFzZkzvXaOxhqQ">
             <img src={youtube} className="h-[50px] w-[50px]" />
           </a>
           <a href="https://twitter.com/KTT86310759">
-            <img src={twitter} className="h-[50px] w-[50px] mr-[550px]" />
+            <img src={twitter} className="h-[50px] w-[50px] mr-[300px]" />
           </a>
         </div>
       </div>

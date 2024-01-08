@@ -31,7 +31,7 @@ const Button: React.FC<Props> = ({
       break;
     case "secondary":
       buttonClassName +=
-        " bg-secondary text-secondary-foreground hover:bg-secondary/90 border-2 border-gray-500 hover:border-gray-600";
+        " w-[135px] h-[50px] rounded-md text-xl hover:bg-white hover:text-dark-green m-2";
       break;
     case "danger":
       buttonClassName +=
