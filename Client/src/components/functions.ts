@@ -1,6 +1,6 @@
 const fetchProducts = async () => {
   try {
-    const response = await fetch("http://192.168.99.36:3000/products/1", {
+    const response = await fetch("http://192.168.1.22:3000/products/1", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +22,7 @@ const fetchProducts = async () => {
 
 const getProducts = async () => {
   try {
-    const response = await fetch("http://192.168.99.36:3000/products", {
+    const response = await fetch("http://192.168.1.22:3000/products", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -38,7 +38,7 @@ const getProducts = async () => {
 
 const getProduct = async (type: string) => {
     try {
-      const response = await fetch("http://192.168.99.36:3000/products/"+type, {
+      const response = await fetch("http://192.168.1.22:3000/products/"+type, {
         method: "GET",
         headers: {
           "Content-Type": "application/json", "Access-Control-Allow-Origin": "*"
@@ -53,25 +53,29 @@ const getProduct = async (type: string) => {
     }
   };
 
-  
+  const handleUpdate = (type: string) => {
+    const filter = { type: "Pc", name: "" };
+    const update = { name, date };
 
-/*   const updateProduct = async (id: string, name: string, date: string) => {
-    try {
-      const response = await fetch(`http://192.168.99.36:3000/products/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, date }),
+    fetch("http://192.168.1.22:3000/products/"+type, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filter, update }),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => {
+        console.error("Error:", error);
       });
+  };
+
   
-      const data = await response.json();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }; */
 
 
-export { fetchProducts, getProducts, getProduct, /* updateProduct */ };
+
+
+
+
+export { fetchProducts, getProducts, getProduct, handleUpdate   };

@@ -40,7 +40,7 @@ app.post("/products/:id", (req, res) => {
   
 });
 
-app.put('/products/:id', async (req, res) => {
+app.put('/products/:a', async (req, res) => {
   const { id } = req.params;
   const { name, date } = req.body;
 
@@ -59,6 +59,14 @@ app.put('/products/:id', async (req, res) => {
 });
 
 
+app.put("/products/update", (req, res) => {
+  const { filter, update } = req.body;
+  Product.updateMany(filter, update)
+    .then(result => res.json(result))
+    .catch(err => res.status(500).json({ error: err.message }));
+});
+
+
 
 mongoose
   .connect(
@@ -69,7 +77,7 @@ mongoose
     console.log("Database connected!");
 
     // Start the server after successful database connection
-    app.listen(port, "192.168.99.36", () =>
+    app.listen(port, "192.168.1.22", () =>
       console.log(`Example app listening on port ${port}!`)
     );
   })
