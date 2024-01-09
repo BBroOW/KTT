@@ -13,7 +13,7 @@ const LandingPage = () => {
 
   return (
     <>
-      <div className="flex flex-row justify-center">
+      <div className="flex flex-row justify-center mb-[190px]">
         <Button
           contents="Utleie"
           buttonType="primary"

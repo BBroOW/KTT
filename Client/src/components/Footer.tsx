@@ -4,7 +4,7 @@ import twitter from "../assets/x.svg";
 
 const Footer = () => {
   return (
-    <div className=" w-full absolute bottom-0">
+    <div className=" w-full  bottom-0">
       <div className="md flex flex-col justify-center bg-dark-green w-full h-[250px] ">
         <div className="flex flex-row w-full justify-between mt-10 font-body text-white">
           <h1 className="ml-[100px]">Telefon: 62 00 08 80</h1>

@@ -11,24 +11,22 @@ import Vr from "./assets/vr.webp";
 // };
 
 const Utleie = () => {
-  // const [item, setItem] = useState("");
-
   // useEffect(() => {
   //   console.log(item);
   // }, [item]);
 
   const navigate = useNavigate();
-  const HandleSelect = () => {
-    navigate("/Utleie/Godkjennelse");
+  const HandleSelect = (item: string) => {
+    navigate("/Utleie/Godkjennelse?item=" + item + "");
   };
 
   return (
     <>
-      <div className="h-full flex flex-row  justify-between mt-[100px]">
+      <div className="h-full flex flex-row  justify-between mt-[100px] mb-[300px]">
         <div
           className="flex flex-col text-center align-middle ml-[100px] hover:scale-125 transition-[1s]"
           onClick={() => {
-            HandleSelect();
+            HandleSelect("3DPrinter");
           }}
         >
           <img src={Printer} className="w-[300px] h-[200px] " />
@@ -39,7 +37,7 @@ const Utleie = () => {
         <div
           className="flex flex-col text-center align-middle hover:scale-125 transition-[1s] "
           onClick={() => {
-            HandleSelect();
+            HandleSelect("Pc");
           }}
         >
           <img src={Pc} className="w-[300px] h-[200px] " />
@@ -48,7 +46,7 @@ const Utleie = () => {
         <div
           className="flex flex-col text-center align-middle mr-[100px] hover:scale-125 transition-[1s] "
           onClick={() => {
-            HandleSelect();
+            HandleSelect("VR");
           }}
         >
           <img src={Vr} className="w-[300px] h-[200px]" />

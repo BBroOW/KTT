@@ -1,28 +1,49 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./components/Button";
+import { getProduct } from "./components/functions";
+import { updateProduct } from "./components/functions";
 
 const UtleieVerification = () => {
   const [sendInn, setSendInn] = useState(false);
-  const handleExitClick = () => {
+
+  /*   const handleExitClick = async () => {
+    await updateProduct(item, name, date);
     window.location.href = "/";
-  };
+  }; */
+
+  const [item, setItem] = useState("");
+  const [products, setProducts] = useState([]);
+  const [name, setName] = useState("");
+  const [date, setDate] = useState("");
 
   useEffect(() => {
-    console.log(sendInn);
-  }, [sendInn]);
+    const urlParams = new URLSearchParams(window.location.search);
+    const item = urlParams.get("item") || "";
+    setItem(item);
+  }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      if (item) {
+        const data = await getProduct(item);
+        setProducts(data);
+      }
+    };
+    getData();
+  }, [item]);
 
   if (sendInn === false) {
     return (
       <>
         <div className="flex justify-center mt-7 font-body text-4xl">
-          <h1>Utlån av X</h1>
+          <h1>Utlån av {item}</h1>
         </div>
 
-        <div className="flex justify-center mt-5 mb-5">
+        <div className="flex justify-center h-fit mt-5 mb-5">
           <div className="flex flex-col justify-center bg-grey w-[700px] h-[600px] rounded-md">
             <div className="flex justify-center text-center  ">
               <h1 className="font-body w-[120px] bg-white rounded-md">
-                Det er X ledige
+                Det er {products?.length || 0} ledige {item} til utlån
               </h1>
             </div>
             <div className="flex flex-col p-4 mt-5">
@@ -39,6 +60,8 @@ const UtleieVerification = () => {
                 type="date"
                 placeholder="Skriv datoen til dagen du henter utstyret"
                 className="w-[600px] h-[50px] border-2 border-black p-2 mt-2 rounded-md"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
               />
             </div>
             <div className="flex flex-col p-4 mt-5">
@@ -47,6 +70,8 @@ const UtleieVerification = () => {
                 type="text"
                 placeholder="Skriv navn til ansvarlig lærer"
                 className="w-[600px] h-[50px] border-2 border-black p-2 mt-2 rounded-md"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className="">
@@ -56,6 +81,7 @@ const UtleieVerification = () => {
                 type="submit"
                 onClick={() => {
                   setSendInn(true);
+                  handleExitClick();
                 }}
               />
             </div>
