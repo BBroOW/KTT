@@ -26,7 +26,7 @@ const Utleie = () => {
         <div
           className="flex flex-col text-center align-middle ml-[100px] hover:scale-125 transition-[1s]"
           onClick={() => {
-            HandleSelect("3DPrinter");
+            HandleSelect("3Dprinter");
           }}
         >
           <img src={Printer} className="w-[300px] h-[200px] " />

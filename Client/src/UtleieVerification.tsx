@@ -1,25 +1,30 @@
 import { useEffect, useState } from "react";
 import Button from "./components/Button";
-import { getProduct, handleUpdate } from "./components/functions";
+import {
+  getProduct,
+  getProductWithName,
+  updateProduct,
+} from "./components/functions";
 
 const UtleieVerification = () => {
   const [sendInn, setSendInn] = useState(false);
 
-  const handleExitClick = () => {
-    if (amount <= products.length) {
-      setSendInn(true);
-      setError(false);
-      handleUpdate("Pc");
-    } else {
-      setError(true);
-    }
-  };
   const [item, setItem] = useState("");
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState(0);
   const [error, setError] = useState(false);
+  const [id, setId] = useState("");
+  const [ending, setEnding] = useState("er");
+
+  useEffect(() => {
+    if (item === "Pc") {
+      setEnding("er");
+    }
+    if (item === "VR") setEnding("-briller");
+    if (item === "3Dprinter") setEnding("e");
+  });
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -37,18 +42,36 @@ const UtleieVerification = () => {
     getData();
   }, [item]);
 
+  const handleExitClick = async () => {
+    if (
+      products.length >= amount &&
+      name !== "" &&
+      date !== "" &&
+      amount !== 0
+    ) {
+      setError(false);
+      await updateProduct(item, name, date, amount);
+      setSendInn(true);
+      await getProductWithName(name);
+    } else {
+      setError(true);
+    }
+  };
+
   if (sendInn === false) {
     return (
       <>
         <div className="flex justify-center mt-7 font-body text-4xl">
-          <h1>Utlån av {item}</h1>
+          <h1>Utlån av {item + ending}</h1>
         </div>
 
         <div className="flex justify-center h-fit mt-5 mb-5">
           <div className="flex flex-col justify-center bg-grey w-[700px] h-[600px] rounded-md">
             <div className="flex justify-center text-center  ">
               <h1 className="font-body w-[120px] bg-white rounded-md">
-                Det er {products?.length || 0} ledige {item} til utlån
+                Det er{" "}
+                {products?.filter((product) => product.name === "").length || 0}{" "}
+                ledige {item + ending} til utlån
               </h1>
             </div>
             <div className="flex flex-col p-4 mt-5">
@@ -59,6 +82,7 @@ const UtleieVerification = () => {
                 className="w-[600px] h-[50px] border-2 border-black p-2 mt-2 rounded-md"
                 value={amount}
                 onChange={(e) => setAmount(parseInt(e.target.value))}
+                min="0"
               />
             </div>
             <div className="flex flex-col p-4 mt-5">
@@ -95,7 +119,7 @@ const UtleieVerification = () => {
             {error && (
               <div className="flex justify-center font-body bg-red w-full text-2xl text-center items-center rounded-md">
                 <div className="w-[360px] h-12 bg-red-500 font-bold items-center flex justify-center rounded-md">
-                  <h1>Det er ikke så mange {item} igjen.</h1>
+                  <h1>Noe gikk feil! grr</h1>
                 </div>
               </div>
             )}
@@ -108,7 +132,27 @@ const UtleieVerification = () => {
   if (sendInn === true) {
     return (
       <>
-        <h1>YIPPIE</h1>
+        <div className="flex justify-center w-full">
+          <div className="flex justify-center flex-col">
+            <h1 className="flex text-center justify-center mt-5 font-body text-3xl">
+              Dine {item + ending}
+            </h1>
+            <div className="flex justify-center items-center w-[800px] h-[500px] bg-grey mt-5 mb-10 rounded-md">
+              <h1>
+                {products.map((product) => (
+                  <div className="flex flex-col">
+                    <h1 className="font-body text-2xl">
+                      {product.productID} {item + ending}
+                    </h1>
+                    <h1 className="font-body text-2xl">
+                      {product.date} - {product.name}
+                    </h1>
+                  </div>
+                ))}
+              </h1>
+            </div>
+          </div>
+        </div>
       </>
     );
   }
