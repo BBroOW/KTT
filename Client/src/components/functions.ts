@@ -1,6 +1,6 @@
 const fetchProducts = async () => {
   try {
-    const response = await fetch("http://192.168.99.36:3000/products/1", {
+    const response = await fetch("http://192.168.1.22:3000/products/1", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +22,7 @@ const fetchProducts = async () => {
 
 const getProducts = async () => {
   try {
-    const response = await fetch("http://192.168.99.36:3000/products", {
+    const response = await fetch("http://192.168.1.22:3000/products", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -74,4 +74,4 @@ const updateProduct = async (id: string, name: string, date: number) => {
   }
 };
 
-export { fetchProducts, getProducts, getProduct, updateProduct };
+export { fetchProducts, getProducts, getProduct /* updateProduct */ };

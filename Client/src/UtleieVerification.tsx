@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react";
 import Button from "./components/Button";
-import { getProduct } from "./components/functions";
-import { updateProduct } from "./components/functions";
+import { getProduct, handleUpdate } from "./components/functions";
 
 const UtleieVerification = () => {
   const [sendInn, setSendInn] = useState(false);
 
-  /*   const handleExitClick = async () => {
-    await updateProduct(item, name, date);
-    window.location.href = "/";
-  }; */
-
+  const handleExitClick = () => {
+    if (amount <= products.length) {
+      setSendInn(true);
+      setError(false);
+      handleUpdate("Pc");
+    } else {
+      setError(true);
+    }
+  };
   const [item, setItem] = useState("");
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -49,9 +54,11 @@ const UtleieVerification = () => {
             <div className="flex flex-col p-4 mt-5">
               <h1 className="font-body text-2xl">Antall</h1>
               <input
-                type="text"
+                type="number"
                 placeholder="Skriv antall her"
                 className="w-[600px] h-[50px] border-2 border-black p-2 mt-2 rounded-md"
+                value={amount}
+                onChange={(e) => setAmount(parseInt(e.target.value))}
               />
             </div>
             <div className="flex flex-col p-4 mt-5">
@@ -74,22 +81,30 @@ const UtleieVerification = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
+
             <div className="">
               <Button
                 contents="Send inn"
                 buttonType="secondary"
                 type="submit"
                 onClick={() => {
-                  setSendInn(true);
                   handleExitClick();
                 }}
               />
             </div>
+            {error && (
+              <div className="flex justify-center font-body bg-red w-full text-2xl text-center items-center rounded-md">
+                <div className="w-[360px] h-12 bg-red-500 font-bold items-center flex justify-center rounded-md">
+                  <h1>Det er ikke så mange {item} igjen.</h1>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </>
     );
   }
+
   if (sendInn === true) {
     return (
       <>
