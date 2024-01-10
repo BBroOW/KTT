@@ -26,6 +26,24 @@ app.get("/products/:type", async (req, res) => {
 });
 
 
+app.put("/products/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, date } = req.body;
+
+  const product = await Product.findById(id);
+
+  if (!product) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
+
+  product.name = name;
+  product.date = date;
+
+  await product.save();
+
+  res.json(product);
+});
+
 
 app.post("/products/:id", (req, res) => {
   const {id} = req.params;
