@@ -97,9 +97,9 @@ const getProductWithName = async (name: string) => {
         },
       }
     );
-    const data = await response.json();
-    console.log(data);
-    return data;
+    const dataWithName = await response.json();
+    console.log(dataWithName);
+    return dataWithName;
   } catch (error) {
     console.error("Error:", error);
   }

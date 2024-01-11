@@ -6,17 +6,23 @@ import {
   updateProduct,
 } from "./components/functions";
 
-const UtleieVerification = () => {
-  const [sendInn, setSendInn] = useState(false);
+interface Product {
+  productID: string;
+  name: string;
+  date: number;
+}
 
+const UtleieVerification: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [sendInn, setSendInn] = useState(false);
   const [item, setItem] = useState("");
-  const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState(0);
   const [error, setError] = useState(false);
-  const [id, setId] = useState("");
   const [ending, setEnding] = useState("er");
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [productsNameFilter, setProductsNameFilter] = useState<Product[]>([]);
 
   useEffect(() => {
     if (item === "Pc") {
@@ -50,9 +56,10 @@ const UtleieVerification = () => {
       amount !== 0
     ) {
       setError(false);
-      await updateProduct(item, name, date, amount);
+      await updateProduct(item, name, date, parseInt(amount));
       setSendInn(true);
-      await getProductWithName(name);
+      const product = await getProductWithName(name);
+      console.log(product.productID);
     } else {
       setError(true);
     }
@@ -111,9 +118,7 @@ const UtleieVerification = () => {
                 contents="Send inn"
                 buttonType="secondary"
                 type="submit"
-                onClick={() => {
-                  handleExitClick();
-                }}
+                onClick={handleExitClick}
               />
             </div>
             {error && (
@@ -138,18 +143,16 @@ const UtleieVerification = () => {
               Dine {item + ending}
             </h1>
             <div className="flex justify-center items-center w-[800px] h-[500px] bg-grey mt-5 mb-10 rounded-md">
-              <h1>
-                {products.map((product) => (
-                  <div className="flex flex-col">
-                    <h1 className="font-body text-2xl">
-                      {product.productID} {item + ending}
+              <div>
+                <div className="flex justify-center w-full">
+                  <div className="flex justify-center flex-col">
+                    <h1 className="flex text-center justify-center mt-5 font-body text-3xl">
+                      Dine {item + ending}
                     </h1>
-                    <h1 className="font-body text-2xl">
-                      {product.date} - {product.name}
-                    </h1>
+                    <div className="flex justify-center items-center w-[800px] h-[500px] bg-grey mt-5 mb-10 rounded-md"></div>
                   </div>
-                ))}
-              </h1>
+                </div>
+              </div>
             </div>
           </div>
         </div>
