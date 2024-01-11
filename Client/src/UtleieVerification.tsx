@@ -5,6 +5,7 @@ import {
   getProductWithName,
   updateProduct,
 } from "./components/functions";
+import { useNavigate } from "react-router-dom";
 
 interface Product {
   productID: string;
@@ -21,8 +22,7 @@ const UtleieVerification: React.FC = () => {
   const [amount, setAmount] = useState(0);
   const [error, setError] = useState(false);
   const [ending, setEnding] = useState("er");
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [productsNameFilter, setProductsNameFilter] = useState<Product[]>([]);
+  const [productIDs, setProductIDs] = useState([]);
 
   useEffect(() => {
     if (item === "Pc") {
@@ -58,11 +58,16 @@ const UtleieVerification: React.FC = () => {
       setError(false);
       await updateProduct(item, name, date, parseInt(amount));
       setSendInn(true);
-      const product = await getProductWithName(name);
-      console.log(product.productID);
+      const productIDs = await getProductWithName(name);
+      setProductIDs(productIDs);
     } else {
       setError(true);
     }
+  };
+
+  const navigate = useNavigate();
+  const handleEndClick = () => {
+    navigate("/");
   };
 
   if (sendInn === false) {
@@ -143,14 +148,21 @@ const UtleieVerification: React.FC = () => {
               Dine {item + ending}
             </h1>
             <div className="flex justify-center items-center w-[800px] h-[500px] bg-grey mt-5 mb-10 rounded-md">
-              <div>
-                <div className="flex justify-center w-full">
-                  <div className="flex justify-center flex-col">
-                    <h1 className="flex text-center justify-center mt-5 font-body text-3xl">
-                      Dine {item + ending}
+              <div className="flex w-[800px] h-[500px] bg-grey mt-5 mb-10 rounded-md flex-col">
+                {productIDs.map((productID) => (
+                  <div className="mt-5">
+                    <h1 className="font-body text-2xl ml-5 ">
+                      Nummer: {productID}
                     </h1>
-                    <div className="flex justify-center items-center w-[800px] h-[500px] bg-grey mt-5 mb-10 rounded-md"></div>
                   </div>
+                ))}
+                <div className="flex items-end h-[500px]">
+                  <Button
+                    contents="Avslutt"
+                    buttonType="secondary"
+                    type="submit"
+                    onClick={handleEndClick}
+                  />
                 </div>
               </div>
             </div>

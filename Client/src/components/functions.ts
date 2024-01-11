@@ -1,7 +1,7 @@
 const fetchProducts = async () => {
   try {
     const response = await fetch(
-      "http://192.168.1.22/products/1" /* "http://192.168.1.22:3000/products/1" */,
+      /* "http://192.168.1.22/products/1" */ /* "http://192.168.1.22:3000/products/1" */ "http://192.168.193.73:3000/products/1",
       {
         method: "POST",
         headers: {
@@ -26,7 +26,7 @@ const fetchProducts = async () => {
 const getProducts = async () => {
   try {
     const response = await fetch(
-      "http://192.168.1.22/products" /* "http://192.168.1.22:3000/products" */,
+      /* "http://192.168.1.22/products" */ /* "http://192.168.1.22:3000/products" */ "http://192.168.193.73:3000/products",
       {
         method: "GET",
         headers: {
@@ -44,13 +44,17 @@ const getProducts = async () => {
 
 const getProduct = async (type: string) => {
   try {
-    const response = await fetch("http://192.168.99.36:3000/products/" + type, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+    const response = await fetch(
+      /* "http://192.168.99.36:3000/products/" */ /* "http://192.168.1.22:3000/products/" */ "http://192.168.193.73:3000/products/" +
+        type,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
 
     const data = await response.json();
     console.log(data);
@@ -67,17 +71,45 @@ const updateProduct = async (
   amount: number
 ) => {
   try {
-    const response = await fetch("http://192.168.99.36:3000/products/" + id, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: name,
-        date: date,
-        amount: amount,
-      }),
-    });
+    const response = await fetch(
+      /* "http://192.168.99.36:3000/products/" */ /* "http://192.168.1.22:3000/products/" */ "http://192.168.193.73:3000/products/" +
+        id,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          date: date,
+          amount: amount,
+        }),
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+const resetProduct = async (productIDs: string[], name: string) => {
+  try {
+    const response = await fetch(
+      /* "http://192.168.1.22:3000/products/update/" */ "http://192.168.193.73:3000/products/update/" +
+        name,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productIDs: productIDs,
+          name: name,
+        }),
+      }
+    );
     const data = await response.json();
     console.log(data);
     return data;
@@ -89,7 +121,8 @@ const updateProduct = async (
 const getProductWithName = async (name: string) => {
   try {
     const response = await fetch(
-      "http://192.168.99.36:3000/products/name/" + name,
+      /* "http://192.168.99.36:3000/products/name/" */ /* "http://192.168.1.22:3000/products/name/" */ "http://192.168.193.73:3000/products/name/" +
+        name,
       {
         method: "GET",
         headers: {
@@ -98,8 +131,10 @@ const getProductWithName = async (name: string) => {
       }
     );
     const dataWithName = await response.json();
+    const productIDs = dataWithName.map((obj) => obj.productID);
     console.log(dataWithName);
-    return dataWithName;
+    console.log(productIDs);
+    return productIDs;
   } catch (error) {
     console.error("Error:", error);
   }
@@ -111,4 +146,5 @@ export {
   getProduct,
   updateProduct,
   getProductWithName,
+  resetProduct,
 };
