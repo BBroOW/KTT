@@ -98,7 +98,9 @@ const UtleieVerification: React.FC = () => {
               />
             </div>
             <div className="flex flex-col p-4 mt-5">
-              <h1 className="font-body text-2xl">Dato</h1>
+              <h1 className="font-body text-2xl">
+                Dato når du skal låne {item + ending}
+              </h1>
               <input
                 type="date"
                 placeholder="Skriv datoen til dagen du henter utstyret"
