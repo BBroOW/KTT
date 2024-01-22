@@ -21,7 +21,7 @@ mongoose
     // Start the server after a successful database connection
     app.listen(
       port,
-      /* "192.168.99.36" */ /* "192.168.1.22" */ "192.168.193.73",
+       "192.168.99.36"  /* "192.168.1.22" */ /* "192.168.193.73" */,
       () => console.log(`Example app listening on port ${port}!`)
     );
   })

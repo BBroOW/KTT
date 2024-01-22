@@ -26,7 +26,7 @@ const fetchProducts = async () => {
 const getProducts = async () => {
   try {
     const response = await fetch(
-      /* "http://192.168.1.22/products" */ /* "http://192.168.1.22:3000/products" */ "http://192.168.193.73:3000/products",
+      "http://192.168.99.36:3000/products/" /* "http://192.168.1.22:3000/products" */ /* "http://192.168.193.73:3000/products" */,
       {
         method: "GET",
         headers: {
@@ -45,7 +45,7 @@ const getProducts = async () => {
 const getProduct = async (type: string) => {
   try {
     const response = await fetch(
-      /* "http://192.168.99.36:3000/products/" */ /* "http://192.168.1.22:3000/products/" */ "http://192.168.193.73:3000/products/" +
+      "http://192.168.99.36:3000/products/" /* "http://192.168.1.22:3000/products/" */ /* "http://192.168.193.73:3000/products/" */ +
         type,
       {
         method: "GET",
@@ -72,7 +72,7 @@ const updateProduct = async (
 ) => {
   try {
     const response = await fetch(
-      /* "http://192.168.99.36:3000/products/" */ /* "http://192.168.1.22:3000/products/" */ "http://192.168.193.73:3000/products/" +
+      "http://192.168.99.36:3000/products/" /* "http://192.168.1.22:3000/products/" */ /* "http://192.168.193.73:3000/products/" */ +
         id,
       {
         method: "PUT",
@@ -97,7 +97,7 @@ const updateProduct = async (
 const resetProduct = async (productIDs: string[], name: string) => {
   try {
     const response = await fetch(
-      /* "http://192.168.1.22:3000/products/update/" */ "http://192.168.193.73:3000/products/update/" +
+      /* "http://192.168.1.22:3000/products/update/" */ /* "http://192.168.193.73:3000/products/update/" */ "http://192.168.99.36:3000/products/update/" +
         name,
       {
         method: "PUT",
@@ -121,7 +121,7 @@ const resetProduct = async (productIDs: string[], name: string) => {
 const getProductWithName = async (name: string) => {
   try {
     const response = await fetch(
-      /* "http://192.168.99.36:3000/products/name/" */ /* "http://192.168.1.22:3000/products/name/" */ "http://192.168.193.73:3000/products/name/" +
+      "http://192.168.99.36:3000/products/name/" /* "http://192.168.1.22:3000/products/name/" */ /* "http://192.168.193.73:3000/products/name/" */ +
         name,
       {
         method: "GET",
